@@ -1,0 +1,96 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "JUDO Geräteeinrichtung",
+        "description": "Konfigurieren Sie Ihr JUDO Wasseraufbereitungsgerät.",
+        "data": {
+          "host": "Host (IP-Adresse)",
+          "username": "Benutzername",
+          "password": "Passwort",
+          "scan_interval": "Abfrageintervall"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zum Gerät nicht möglich. Bitte überprüfen Sie die IP-Adresse und stellen Sie sicher, dass das Gerät eingeschaltet ist.",
+      "invalid_auth": "Ungültiger Benutzername oder Passwort.",
+      "unknown_device": "Unbekannter oder nicht unterstützter JUDO Gerätetyp.",
+      "unknown": "Ein unerwarteter Fehler ist aufgetreten."
+    },
+    "abort": {
+      "already_configured": "Dieses Gerät ist bereits konfiguriert."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "JUDO Geräteoptionen",
+        "data": {
+          "scan_interval": "Abfrageintervall"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "water_hardness": { "name": "Wasserhärte" },
+      "salt_weight": { "name": "Salzvorrat" },
+      "salt_range": { "name": "Salzreichweite" },
+      "salt_shortage_warning": { "name": "Salzmangelwarnung" },
+      "total_water": { "name": "Gesamtwassermenge" },
+      "soft_water": { "name": "Weichwassermenge" },
+      "hardness_unit": { "name": "Härteeinheit" },
+      "operating_days": { "name": "Betriebstage" },
+      "max_extraction_duration": { "name": "Max. Entnahmedauer" },
+      "max_extraction_volume": { "name": "Max. Entnahmemenge" },
+      "max_flow_rate": { "name": "Max. Volumenstrom" },
+      "sleep_duration": { "name": "Sleepmodusdauer" },
+      "micro_leak_setting": { "name": "Mikroleckage-Einstellung" },
+      "learning_remaining_water": { "name": "Lernmodus Restwassermenge" },
+      "absence_limit_flow_rate": { "name": "Abwesenheitsgrenze Volumenstrom" },
+      "absence_limit_volume": { "name": "Abwesenheitsgrenze Wassermenge" },
+      "absence_limit_duration": { "name": "Abwesenheitsgrenze Entnahmezeit" },
+      "idos_current_flow": { "name": "Aktueller Durchfluss" },
+      "idos_dosing_amount": { "name": "Dosiermenge" },
+      "idos_container_remaining": { "name": "Restmenge im Behälter" },
+      "idos_concentration": { "name": "Dosierkonzentration" },
+      "idos_error_code": { "name": "Fehlercode" },
+      "idos_warnings": { "name": "Warnmeldungen" },
+      "idos_type": { "name": "Dosiertyp" },
+      "ifill_max_fill_pressure": { "name": "Max. Fülldruck" },
+      "ifill_cartridge_type": { "name": "Patronentyp" },
+      "ifill_raw_water_hardness": { "name": "Rohwasserhärte" },
+      "ifill_max_conductivity": { "name": "Max. Leitwert" }
+    },
+    "binary_sensor": {
+      "learning_mode_active": { "name": "Lernmodus aktiv" }
+    },
+    "button": {
+      "start_regeneration": { "name": "Regeneration starten" },
+      "reset_notification": { "name": "Meldung zurücksetzen" },
+      "start_micro_leak_test": { "name": "Mikroleckageprüfung starten" },
+      "start_learning_mode": { "name": "Lernmodus starten" }
+    },
+    "switch": {
+      "leak_protection": { "name": "Leckageschutz" },
+      "vacation_mode": { "name": "Urlaubsmodus" },
+      "sleep_mode": { "name": "Sleepmodus" }
+    },
+    "number": {
+      "set_water_hardness": { "name": "Wunschwasserhärte" },
+      "set_salt_supply": { "name": "Salzvorrat (setzen)" },
+      "set_salt_shortage_warning": { "name": "Salzmangelwarnung (setzen)" },
+      "set_max_extraction_duration": { "name": "Max. Entnahmedauer (setzen)" },
+      "set_max_extraction_volume": { "name": "Max. Entnahmemenge (setzen)" },
+      "set_max_flow_rate": { "name": "Max. Volumenstrom (setzen)" },
+      "set_sleep_duration": { "name": "Sleepmodusdauer (setzen)" }
+    },
+    "select": {
+      "set_hardness_unit": { "name": "Härteeinheit" },
+      "pump_mode": { "name": "Pumpenbetriebsart" },
+      "fill_valve_mode": { "name": "Füllventilmodus" },
+      "micro_leak_mode": { "name": "Mikroleckage-Modus" }
+    }
+  }
+}

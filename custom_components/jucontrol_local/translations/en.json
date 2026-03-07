@@ -1,0 +1,96 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "JUDO Device Setup",
+        "description": "Configure your JUDO water treatment device.",
+        "data": {
+          "host": "Host (IP address)",
+          "username": "Username",
+          "password": "Password",
+          "scan_interval": "Polling interval"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Unable to connect to the device. Please check the IP address and ensure the device is powered on.",
+      "invalid_auth": "Invalid username or password.",
+      "unknown_device": "Unknown or unsupported JUDO device type.",
+      "unknown": "An unexpected error occurred."
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "JUDO Device Options",
+        "data": {
+          "scan_interval": "Polling interval"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "water_hardness": { "name": "Water hardness" },
+      "salt_weight": { "name": "Salt supply" },
+      "salt_range": { "name": "Salt range" },
+      "salt_shortage_warning": { "name": "Salt shortage warning" },
+      "total_water": { "name": "Total water volume" },
+      "soft_water": { "name": "Soft water volume" },
+      "hardness_unit": { "name": "Hardness unit" },
+      "operating_days": { "name": "Operating days" },
+      "max_extraction_duration": { "name": "Max extraction duration" },
+      "max_extraction_volume": { "name": "Max extraction volume" },
+      "max_flow_rate": { "name": "Max flow rate" },
+      "sleep_duration": { "name": "Sleep mode duration" },
+      "micro_leak_setting": { "name": "Micro-leak setting" },
+      "learning_remaining_water": { "name": "Learning mode remaining water" },
+      "absence_limit_flow_rate": { "name": "Absence limit flow rate" },
+      "absence_limit_volume": { "name": "Absence limit volume" },
+      "absence_limit_duration": { "name": "Absence limit duration" },
+      "idos_current_flow": { "name": "Current flow rate" },
+      "idos_dosing_amount": { "name": "Dosing amount" },
+      "idos_container_remaining": { "name": "Container remaining" },
+      "idos_concentration": { "name": "Dosing concentration" },
+      "idos_error_code": { "name": "Error code" },
+      "idos_warnings": { "name": "Warnings" },
+      "idos_type": { "name": "Dosing type" },
+      "ifill_max_fill_pressure": { "name": "Max fill pressure" },
+      "ifill_cartridge_type": { "name": "Cartridge type" },
+      "ifill_raw_water_hardness": { "name": "Raw water hardness" },
+      "ifill_max_conductivity": { "name": "Max conductivity" }
+    },
+    "binary_sensor": {
+      "learning_mode_active": { "name": "Learning mode active" }
+    },
+    "button": {
+      "start_regeneration": { "name": "Start regeneration" },
+      "reset_notification": { "name": "Reset notification" },
+      "start_micro_leak_test": { "name": "Start micro-leak test" },
+      "start_learning_mode": { "name": "Start learning mode" }
+    },
+    "switch": {
+      "leak_protection": { "name": "Leak protection" },
+      "vacation_mode": { "name": "Vacation mode" },
+      "sleep_mode": { "name": "Sleep mode" }
+    },
+    "number": {
+      "set_water_hardness": { "name": "Desired water hardness" },
+      "set_salt_supply": { "name": "Salt supply (set)" },
+      "set_salt_shortage_warning": { "name": "Salt shortage warning (set)" },
+      "set_max_extraction_duration": { "name": "Max extraction duration (set)" },
+      "set_max_extraction_volume": { "name": "Max extraction volume (set)" },
+      "set_max_flow_rate": { "name": "Max flow rate (set)" },
+      "set_sleep_duration": { "name": "Sleep mode duration (set)" }
+    },
+    "select": {
+      "set_hardness_unit": { "name": "Hardness unit" },
+      "pump_mode": { "name": "Pump operation mode" },
+      "fill_valve_mode": { "name": "Fill valve mode" },
+      "micro_leak_mode": { "name": "Micro-leak mode" }
+    }
+  }
+}
