@@ -2,7 +2,7 @@
 
 [![HACS](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 [![Lizenz: MIT](https://img.shields.io/badge/Lizenz-MIT-yellow.svg)](LICENSE)
-[![GitHub Release](https://img.shields.io/github/v/release/timo-neumeier/JUcontrol_local)](https://github.com/timo-neumeier/JUcontrol_local/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/itsh-neumeier/JUcontrol_local)](https://github.com/itsh-neumeier/JUcontrol_local/releases)
 
 Eine **rein lokale** Home Assistant Integration für JUDO Wasseraufbereitungsgeräte. Kommuniziert direkt mit dem Gerät in Ihrem lokalen Netzwerk — keine Cloud-Abhängigkeit.
 
@@ -40,13 +40,13 @@ Eine **rein lokale** Home Assistant Integration für JUDO Wasseraufbereitungsger
 
 1. Öffnen Sie **HACS** in Ihrer Home Assistant Instanz.
 2. Klicken Sie auf die drei Punkte oben rechts und wählen Sie **Benutzerdefinierte Repositories**.
-3. Fügen Sie `https://github.com/timo-neumeier/JUcontrol_local` als **Integration** hinzu.
+3. Fügen Sie `https://github.com/itsh-neumeier/JUcontrol_local` als **Integration** hinzu.
 4. Suchen Sie nach **JUDO JUcontrol Local** und klicken Sie **Herunterladen**.
 5. Starten Sie Home Assistant neu.
 
 ### Manuelle Installation
 
-1. Laden Sie das neueste Release von [GitHub Releases](https://github.com/timo-neumeier/JUcontrol_local/releases) herunter.
+1. Laden Sie das neueste Release von [GitHub Releases](https://github.com/itsh-neumeier/JUcontrol_local/releases) herunter.
 2. Kopieren Sie den Ordner `custom_components/jucontrol_local` in Ihr Home Assistant `config/custom_components/` Verzeichnis.
 3. Starten Sie Home Assistant neu.
 

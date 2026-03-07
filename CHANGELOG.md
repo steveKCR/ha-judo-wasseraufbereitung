@@ -31,4 +31,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Diagnostics support
 - MIT License
 
-[1.0.0]: https://github.com/timo-neumeier/JUcontrol_local/releases/tag/v1.0.0
+[1.0.0]: https://github.com/itsh-neumeier/JUcontrol_local/releases/tag/v1.0.0
