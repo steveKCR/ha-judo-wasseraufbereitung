@@ -151,6 +151,31 @@ Entities are automatically created based on the detected device type and its cap
 
 ---
 
+## Integration Branding (HA 2026.3+)
+
+This integration now ships local branding assets in:
+
+`custom_components/jucontrol_local/brand/`
+
+Included files:
+
+- `icon.png`
+- `icon@2x.png`
+- `logo.png`
+- `logo@2x.png`
+
+Home Assistant resolves integration images by domain (`jucontrol_local`) and loads these assets automatically.
+Per-device logos are not supported via `device_info`; visible images come from integration branding.
+
+Quick check endpoints in your HA instance:
+
+- `/api/brands/integration/jucontrol_local/icon.png`
+- `/api/brands/integration/jucontrol_local/logo.png`
+
+If a file is missing or the domain/path is wrong, Home Assistant returns a default placeholder image.
+
+---
+
 ## Troubleshooting
 
 | Problem | Solution |

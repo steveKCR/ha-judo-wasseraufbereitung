@@ -151,6 +151,31 @@ Entitäten werden automatisch basierend auf dem erkannten Gerätetyp und seinen 
 
 ---
 
+## Integrations-Branding (HA 2026.3+)
+
+Diese Integration liefert die Branding-Dateien jetzt direkt lokal mit:
+
+`custom_components/jucontrol_local/brand/`
+
+Enthaltene Dateien:
+
+- `icon.png`
+- `icon@2x.png`
+- `logo.png`
+- `logo@2x.png`
+
+Home Assistant ordnet die Bilder ueber die Domain (`jucontrol_local`) zu und laedt diese Dateien automatisch.
+Ein eigenes Logo pro einzelnes Geraet wird nicht ueber `device_info` gesetzt; sichtbare Bilder kommen aus dem Integrations-Branding.
+
+Schneller Test in Home Assistant:
+
+- `/api/brands/integration/jucontrol_local/icon.png`
+- `/api/brands/integration/jucontrol_local/logo.png`
+
+Wenn Datei, Pfad oder Domain nicht passen, liefert Home Assistant ein Standard-Platzhalterbild zurueck.
+
+---
+
 ## Fehlerbehebung
 
 | Problem | Lösung |
