@@ -176,43 +176,32 @@ Wenn Datei, Pfad oder Domain nicht passen, liefert Home Assistant ein Standard-P
 
 ---
 
-## Automatisierungsbeispiel: Salzvorrat
+## Blueprint: Salzvorrat Erinnerung
 
-Die folgende Automation sendet sofort eine Benachrichtigung, wenn die `Salzreichweite` auf oder unter die in `Salzmangelwarnung` gesetzte Anzahl Tage faellt.
-Zusätzlich erinnert sie taeglich um `09:00` erneut, bis der Salzvorrat wieder ueber dem gesetzten Grenzwert liegt.
+Fuer die Salzvorrat-Erinnerung gibt es jetzt einen fertigen Blueprint:
 
-Passe vor dem Einfuegen bitte die Entity-IDs und den Benachrichtigungsdienst an dein System an:
+`blueprints/automation/itsh-neumeier/jucontrol_salt_supply_reminder.yaml`
 
-```yaml
-alias: JUcontrol Salzvorrat Erinnerung
-description: Meldet niedrigen Salzvorrat sofort und danach taeglich, solange der Grenzwert unterschritten ist.
-mode: single
-trigger:
-  - platform: state
-    entity_id:
-      - sensor.jucontrol_local_salzreichweite
-      - sensor.jucontrol_local_salzmangelwarnung
-  - platform: time
-    at: "09:00:00"
-condition:
-  - condition: template
-    value_template: >
-      {{ states('sensor.jucontrol_local_salzreichweite') | float(999) <=
-         states('sensor.jucontrol_local_salzmangelwarnung') | float(0) }}
-action:
-  - service: notify.notify
-    data:
-      title: JUcontrol Salzvorrat
-      message: >
-        Salz nachfuellen. Verbleibende Salzreichweite:
-        {{ states('sensor.jucontrol_local_salzreichweite') }} Tage.
-        Grenzwert Salzmangelwarnung:
-        {{ states('sensor.jucontrol_local_salzmangelwarnung') }} Tage.
-```
+Der Blueprint sendet sofort eine Benachrichtigung, wenn die `Salzreichweite`
+auf oder unter die `Salzmangelwarnung` faellt, und erinnert danach taeglich
+weiter, bis die Reichweite wieder ueber dem Grenzwert liegt.
 
-Wenn du den Grenzwert direkt in Home Assistant anpassen moechtest, nutze die Number-Entitaet
-`Salzmangelwarnung (setzen)`. Sobald die `Salzreichweite` wieder groesser als die aktuelle
-`Salzmangelwarnung` ist, stoppt die taegliche Erinnerung automatisch.
+Verfuegbare Eingaben im Blueprint:
+
+- `Salt range entity`: die JUcontrol-Entitaet fuer `Salzreichweite`
+- `Salt shortage warning entity`: die Entitaet fuer `Salzmangelwarnung`
+- `Daily reminder time`: Uhrzeit fuer die taegliche Erinnerung
+- `Notification title`: Titel der Meldung
+- `Notification intro text`: freier Einleitungstext vor den automatisch eingesetzten Tageswerten
+- `Reminder actions`: optionale eigene Aktionen, zum Beispiel `notify.mobile_app_*`
+
+Wenn keine eigenen Aktionen gesetzt werden, erstellt der Blueprint automatisch
+eine `persistent_notification` in Home Assistant.
+
+Zum Import kannst du die Blueprint-Datei direkt aus diesem Repository in Home Assistant unter
+**Einstellungen > Automationen & Szenen > Blueprints > Blueprint importieren** verwenden.
+Wenn du den Grenzwert direkt in Home Assistant aendern moechtest, nutze weiter die Number-Entitaet
+`Salzmangelwarnung (setzen)`.
 
 ---
 

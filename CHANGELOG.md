@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- README automation example for daily salt supply reminders based on `Salt range` and `Salt shortage warning`
+- Reusable Home Assistant blueprint for daily salt supply reminders based on `Salt range` and `Salt shortage warning`
 
 ## [1.2.0] - 2026-03-14
 

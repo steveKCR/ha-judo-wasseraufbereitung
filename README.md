@@ -176,44 +176,32 @@ If a file is missing or the domain/path is wrong, Home Assistant returns a defau
 
 ---
 
-## Automation Example: Salt Supply Reminder
+## Blueprint: Salt Supply Reminder
 
-The automation below sends an immediate notification when `Salt range` falls to or below the
-configured `Salt shortage warning` threshold. It also repeats the notification every day at
-`09:00` until the salt supply is back above the configured warning value.
+The repository now includes a ready-to-use blueprint for the salt supply reminder:
 
-Before using it, replace the entity IDs and notification service with the ones from your system:
+`blueprints/automation/itsh-neumeier/jucontrol_salt_supply_reminder.yaml`
 
-```yaml
-alias: JUcontrol salt supply reminder
-description: Notify immediately for low salt supply and repeat daily while the threshold is exceeded.
-mode: single
-trigger:
-  - platform: state
-    entity_id:
-      - sensor.jucontrol_local_salt_range
-      - sensor.jucontrol_local_salt_shortage_warning
-  - platform: time
-    at: "09:00:00"
-condition:
-  - condition: template
-    value_template: >
-      {{ states('sensor.jucontrol_local_salt_range') | float(999) <=
-         states('sensor.jucontrol_local_salt_shortage_warning') | float(0) }}
-action:
-  - service: notify.notify
-    data:
-      title: JUcontrol salt supply
-      message: >
-        Refill salt. Remaining salt range:
-        {{ states('sensor.jucontrol_local_salt_range') }} days.
-        Salt shortage warning threshold:
-        {{ states('sensor.jucontrol_local_salt_shortage_warning') }} days.
-```
+The blueprint sends an immediate alert when `Salt range` falls to or below
+`Salt shortage warning` and then repeats the reminder daily until the value
+recovers above the threshold again.
 
-If you want to change the threshold directly in Home Assistant, use the
-`Salt shortage warning (set)` number entity. Once `Salt range` is above the current
-`Salt shortage warning`, the daily reminder stops automatically.
+Blueprint inputs:
+
+- `Salt range entity`: the JUcontrol `Salt range` entity
+- `Salt shortage warning entity`: the entity that holds the warning threshold
+- `Daily reminder time`: time used for the recurring daily reminder
+- `Notification title`: title for the reminder
+- `Notification intro text`: free text shown before the automatically inserted day values
+- `Reminder actions`: optional custom actions such as `notify.mobile_app_*`
+
+If no custom actions are configured, the blueprint creates a Home Assistant
+`persistent_notification` by default.
+
+Import the blueprint in Home Assistant via
+**Settings > Automations & Scenes > Blueprints > Import Blueprint** and use the
+file from this repository. If you want to change the threshold directly in Home Assistant,
+use the `Salt shortage warning (set)` number entity.
 
 ---
 
