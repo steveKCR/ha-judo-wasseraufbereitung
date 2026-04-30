@@ -5,6 +5,13 @@ Alle nennenswerten Änderungen werden hier dokumentiert.
 Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [1.0.3] - 2026-04-30
+
+### Hinzugefügt
+
+- `icon.png` und `logo.png` im Integrationsordner (JUDO-Markenbilder aus der bisherigen Integration),
+  damit Home Assistant das Logo wieder in Konfiguration und Gerätekarte anzeigt.
+
 ## [1.0.2] - 2026-04-30
 
 ### Geändert
