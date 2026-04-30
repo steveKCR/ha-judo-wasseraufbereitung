@@ -52,8 +52,8 @@ SELECT_DESCRIPTIONS: tuple[JudoSelectEntityDescription, ...] = (
         required_capability=Capability.SET_HARDNESS,
         options_map={},  # options_list is used directly
         options_list=WATER_HARDNESS_OPTIONS,
-        current_fn=lambda data: str(data.get("water_hardness", 1))
-        if data.get("water_hardness") is not None
+        current_fn=lambda data: str(v)
+        if (v := data.get("water_hardness")) and 1 <= v <= 30
         else None,
         default_option="6",
         select_fn=lambda coord, val: coord.client.set_water_hardness(int(val)),

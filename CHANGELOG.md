@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.1] - 2026-04-30
+
+### Fixed
+
+- **Flow rate accuracy**: `_prev_total_water` and timestamp are now only committed after a fully successful coordinator update cycle — prevents a false delta if a later API call fails in the same cycle
+- **Water hardness dropdown**: guard against device returning value 0 (not a valid option) — select shows unknown instead of crashing
+- **`salt_range` sensor**: added `native_unit_of_measurement=UnitOfTime.DAYS` for correct dashboard and history display
+- **All ZEWA buttons** (`reset_notification`, `start_micro_leak_test`, `start_learning_mode`) now disabled by default, consistent with softener buttons
+- **Removed unused** `DEFAULT_PORT` constant from `const.py`
+
 ## [1.6.0] - 2026-04-30
 
 ### Added

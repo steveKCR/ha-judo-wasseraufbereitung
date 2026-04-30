@@ -98,6 +98,12 @@ class JudoDataCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             "service_address": self.service_address,
         }
 
+        # Capture prev values locally; only commit to self after a fully successful update
+        _prev_water = self._prev_total_water
+        _prev_time = self._prev_total_water_time
+        _new_water: int | None = None
+        _new_time: datetime | None = None
+
         try:
             # Operating hours (all devices)
             if self.has_capability(Capability.OPERATING_HOURS):
@@ -119,12 +125,9 @@ class JudoDataCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                 current_water = await self.client.get_total_water()
                 data["total_water"] = current_water
                 now = datetime.now(timezone.utc)
-                if (
-                    self._prev_total_water is not None
-                    and self._prev_total_water_time is not None
-                ):
-                    delta_liters = current_water - self._prev_total_water
-                    delta_seconds = (now - self._prev_total_water_time).total_seconds()
+                if _prev_water is not None and _prev_time is not None:
+                    delta_liters = current_water - _prev_water
+                    delta_seconds = (now - _prev_time).total_seconds()
                     if delta_seconds > 0 and delta_liters >= 0:
                         data["current_flow_rate"] = round(
                             delta_liters / delta_seconds * 3600, 1
@@ -133,8 +136,8 @@ class JudoDataCoordinator(DataUpdateCoordinator[dict[str, Any]]):
                         data["current_flow_rate"] = 0.0
                 else:
                     data["current_flow_rate"] = None
-                self._prev_total_water = current_water
-                self._prev_total_water_time = now
+                _new_water = current_water
+                _new_time = now
 
             if self.has_capability(Capability.SOFT_WATER):
                 data["soft_water"] = await self.client.get_soft_water()
@@ -177,6 +180,11 @@ class JudoDataCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             # i-fill
             if self.has_capability(Capability.FILL_LIMITS):
                 data["ifill_limits"] = await self.client.ifill_get_limits()
+
+            # Commit flow-rate tracking only after fully successful update
+            if _new_water is not None and _new_time is not None:
+                self._prev_total_water = _new_water
+                self._prev_total_water_time = _new_time
 
         except JudoAuthError as err:
             raise UpdateFailed(f"Authentication failed: {err}") from err

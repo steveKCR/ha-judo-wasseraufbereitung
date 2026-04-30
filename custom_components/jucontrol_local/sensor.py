@@ -62,6 +62,7 @@ SENSOR_DESCRIPTIONS: tuple[JudoSensorEntityDescription, ...] = (
         translation_key="salt_range",
         icon="mdi:calendar-clock",
         state_class=SensorStateClass.MEASUREMENT,
+        native_unit_of_measurement=UnitOfTime.DAYS,
         required_capability=Capability.SALT_SUPPLY,
         value_fn=lambda data: data.get("salt_range"),
     ),
