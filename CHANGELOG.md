@@ -5,6 +5,13 @@ Alle nennenswerten Änderungen werden hier dokumentiert.
 Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [1.0.4] - 2026-04-30
+
+### Geändert
+
+- Offizielles JUDO-„Quadrat“-Logo als Quelle; Bilder **256×256** (`icon.png`, `logo.png`) und **512×512** (`icon@2x.png`, `logo@2x.png`).
+- Ordner **`brand/`** gemäß Home Assistant **ab 2026.3** ([lokale Brand-Bilder](https://developers.home-assistant.io/blog/2026/02/24/brands-proxy-api/)); zusätzlich Kopien neben der `manifest.json` für ältere Auslesepfade.
+
 ## [1.0.3] - 2026-04-30
 
 ### Hinzugefügt
