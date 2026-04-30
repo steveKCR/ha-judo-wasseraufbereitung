@@ -5,6 +5,13 @@ Alle nennenswerten Änderungen werden hier dokumentiert.
 Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [1.0.1] - 2026-04-30
+
+### Hinzugefügt
+
+- JUDO-Logo als Integrations-Icon (icon.png + brand/-Assets) für eine
+  saubere visuelle Darstellung in HACS und Home Assistant 2026.3+
+
 ## [1.0.0] - 2026-04-30
 
 ### Hinzugefügt
