@@ -125,6 +125,7 @@ SENSOR_DESCRIPTIONS: tuple[JudoSensorEntityDescription, ...] = (
         translation_key="current_flow_rate",
         icon="mdi:water-pump",
         state_class=SensorStateClass.MEASUREMENT,
+        device_class=SensorDeviceClass.VOLUME_FLOW_RATE,
         native_unit_of_measurement="L/h",
         suggested_display_precision=1,
         required_capability=Capability.TOTAL_WATER,
