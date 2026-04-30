@@ -57,6 +57,8 @@ Eine schlanke, **lokale** Home-Assistant-Integration für den **JUDO i-soft K SA
 2. In den HA-Konfigurationsordner kopieren: `/config/custom_components/judo_wasseraufbereitung/`
 3. Home Assistant neu starten
 
+> **Logo:** Ab HA **2026.3** werden Markenbilder aus `custom_components/judo_wasseraufbereitung/brand/` geladen (liegt der Integration bei). Bleibt das Icon aus, HA neu starten und ggf. den Browser-Cache leeren.
+
 ## Einrichtung
 
 1. **Einstellungen → Geräte & Dienste → Integration hinzufügen**
