@@ -1,241 +1,91 @@
-# JUcontrol local
+# JUDO Wasseraufbereitung
 
 [![HACS](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://github.com/hacs/integration)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![GitHub Release](https://img.shields.io/github/v/release/itsh-neumeier/JUcontrol_local)](https://github.com/itsh-neumeier/JUcontrol_local/releases)
+[![GitHub Release](https://img.shields.io/github/v/release/steveKCR/JUcontrol_local)](https://github.com/steveKCR/JUcontrol_local/releases)
 
-A **local-only** Home Assistant integration for JUDO water treatment devices. Communicates directly with the device on your local network — no cloud dependency.
+Eine schlanke, **lokale** Home-Assistant-Integration für den **JUDO i-soft K SAFE+** Wasserenthärter. Kommuniziert direkt mit dem Gerät im LAN — keine Cloud, kein Server, keine Abhängigkeiten.
+
+> Diese Integration ist gezielt nur für den i-soft K SAFE+ entwickelt und bewusst minimal gehalten.
 
 ---
 
 ## Features
 
-- **100% Local** — Communicates directly via the device's REST API on your LAN
-- **Auto-Detection** — Automatically identifies the connected JUDO device model
-- **Full Sensor Support** — Water hardness, salt supply, water volumes, operating hours, and more
-- **Device Control** — Start regeneration, toggle leak protection, set vacation mode, adjust settings
-- **Configurable Polling** — Choose your update interval: 30 s, 1 min, 2 min, 5 min, or 10 min
-- **Multi-Language** — English and German translations included
-- **Diagnostics** — Built-in diagnostics support for troubleshooting
+- **100 % lokal** über die JUDO REST-API
+- **Wunschwasserhärte als Dropdown** (1–30 °dH)
+- **Leckageschutz öffnen/schließen**
+- **Live-Durchfluss** (abgeleitet aus Polling-Delta)
+- **Beide Wassermengen-Sensoren** in m³ und Litern
+- **30-Sekunden-Polling** standardmäßig
+- **Energy-Dashboard-kompatibel** (Wassermengen mit `WATER` device class)
 
----
+## Entitäten
 
-## Supported Devices
-
-| Device | Type | Key Features |
+| Typ | Name | Bemerkung |
 |---|---|---|
-| **i-soft SAFE+** / **i-soft K SAFE+** | Water Softener | Softening, Leak Protection, Salt Monitoring |
-| **i-soft PRO** / **i-soft PRO L** | Water Softener | Softening, Leak Protection, Scenes |
-| **i-soft** / **i-soft K** | Water Softener | Softening, Leak Alarm |
-| **SOFTwell P / S / K / KP / KS** | Water Softener | Basic Softening, Statistics |
-| **ZEWA i-SAFE** / **PROM-i-SAFE** / **ZEWA i-SAFE FILT** | Leak Protection | Standalone Leak Protection, Absence Management |
-| **i-dos eco** | Dosing Pump | Chemical Dosing, Pump Control |
-| **i-fill 60** | Heating Fill System | Heating Circuit Fill, Valve Control |
+| Sensor | Aktueller Durchfluss | L/h, abgeleitet aus Polling-Delta |
+| Sensor | Gesamtwassermenge | m³ |
+| Sensor | Gesamtwassermenge (Liter) | L |
+| Sensor | Enthärtetes Wasser | m³ |
+| Sensor | Enthärtetes Wasser (Liter) | L |
+| Sensor | Salzreichweite | Tage |
+| Sensor | Salzvorrat | kg |
+| Sensor | Aktuelle Wasserhärte | °dH |
+| Select | Wunschwasserhärte | Dropdown 1–30 °dH |
+| Valve | Leckageschutz | offen/geschlossen |
 
----
+## Voraussetzungen
+
+- JUDO i-soft K SAFE+ mit JUDO Connectivity-Modul (Software-Version ≥ 3.20, Hardware-Version ≥ 4.0)
+- Connectivity-Modul über LAN/WLAN im Heimnetzwerk
+- Home Assistant ≥ 2024.4
 
 ## Installation
 
-### HACS (Recommended)
+### Über HACS (empfohlen)
 
-1. Open **HACS** in your Home Assistant instance.
-2. Click the three dots in the top-right corner and select **Custom repositories**.
-3. Add `https://github.com/itsh-neumeier/JUcontrol_local` as an **Integration**.
-4. Search for **JUcontrol local** and click **Download**.
-5. Restart Home Assistant.
+1. HACS öffnen → Integrationen → Menü oben rechts → **Benutzerdefinierte Repositories**
+2. Repository: `https://github.com/steveKCR/JUcontrol_local`
+3. Kategorie: **Integration** → Hinzufügen
+4. Anschließend „**JUDO Wasseraufbereitung**" suchen und installieren
+5. Home Assistant neu starten
 
-### Manual Installation
+### Manuell
 
-1. Download the latest release from [GitHub Releases](https://github.com/itsh-neumeier/JUcontrol_local/releases).
-2. Copy the `custom_components/jucontrol_local` folder to your Home Assistant `config/custom_components/` directory.
-3. Restart Home Assistant.
+1. Den Ordner `custom_components/judo_wasseraufbereitung` aus dem Repository herunterladen
+2. In den HA-Konfigurationsordner kopieren: `/config/custom_components/judo_wasseraufbereitung/`
+3. Home Assistant neu starten
 
----
+## Einrichtung
 
-## Configuration
+1. **Einstellungen → Geräte & Dienste → Integration hinzufügen**
+2. „JUDO Wasseraufbereitung" auswählen
+3. Eingaben:
+   - **IP-Adresse** des Connectivity-Moduls (z. B. `192.168.1.50`)
+   - **Benutzername** (Standard: `admin`)
+   - **Passwort** (Standard: `Connectivity`)
+   - **Abfrageintervall** (Standard: 30 Sekunden)
 
-1. Go to **Settings** > **Devices & Services** > **Add Integration**.
-2. Search for **JUcontrol local**.
-3. Enter your device details:
+## REST-API-Befehle
 
-| Parameter | Description | Default |
-|---|---|---|
-| **Host** | IP address of your JUDO device | *(required)* |
-| **Username** | API username | `admin` |
-| **Password** | API password | `Connectivity` |
-| **Polling Interval** | How often to query the device | `1 minute` |
+Die Integration verwendet ausschließlich diese 10 dokumentierten REST-Befehle:
 
-4. The integration will auto-detect your device model and create the appropriate entities.
-
-### Changing the Polling Interval
-
-After setup, you can change the polling interval at any time:
-
-1. Go to **Settings** > **Devices & Services**.
-2. Find your JUDO device and click **Configure**.
-3. Select a new polling interval and save.
-
----
-
-## Available Entities
-
-Entities are automatically created based on the detected device type and its capabilities. Not all entities are available for every device model.
-
-### Sensors
-
-| Entity | Description | Device Types |
-|---|---|---|
-| Water Hardness | Current desired water hardness (°dH) | i-soft variants |
-| Salt Supply | Current salt weight (kg) | i-soft variants |
-| Salt Range | Estimated salt range (days) | i-soft variants |
-| Salt Shortage Warning | Warning threshold (days) | i-soft variants |
-| Total Water Volume | Total water consumed (m³) | Most devices |
-| Soft Water Volume | Soft water produced (m³) | Softener devices |
-| Operating Days | Total operating days | All devices |
-| Current Flow Rate | Current water flow (L/h) | i-dos eco |
-| Container Remaining | Dosing agent remaining (L) | i-dos eco |
-| Max Fill Pressure | Maximum fill pressure (bar) | i-fill 60 |
-| Cartridge Type | Installed cartridge type | i-fill 60 |
-
-### Buttons
-
-| Entity | Description | Device Types |
-|---|---|---|
-| Start Regeneration | Triggers a manual regeneration cycle | i-soft variants |
-| Reset Notification | Resets active notifications | ZEWA i-SAFE |
-| Start Micro-Leak Test | Runs a micro-leak detection test | ZEWA i-SAFE |
-| Start Learning Mode | Starts the learning mode | ZEWA i-SAFE |
-
-### Switches
-
-| Entity | Description | Device Types |
-|---|---|---|
-| Leak Protection | Closes/opens the leak protection valve | i-soft SAFE+, ZEWA |
-| Sleep Mode | Enables/disables sleep mode | ZEWA i-SAFE |
-
-### Selects
-
-| Entity | Options | Device Types |
-|---|---|---|
-| Vacation Mode | Off, U1, U2, U3 | i-soft variants, ZEWA |
-| Hardness Unit | °dH, °eH, °fH, gpg, ppm, mmol, mval | i-soft variants |
-| Pump Operation Mode | Off, Auto, Manual, Single | i-dos eco |
-| Fill Valve Mode | Auto, Manual Open, Manual Close | i-fill 60 |
-| Micro-Leak Mode | Disabled, Notify Only, Notify and Close | ZEWA i-SAFE |
-
-### Numbers
-
-| Entity | Range | Device Types |
-|---|---|---|
-| Desired Water Hardness | 1–30 °dH | i-soft variants |
-| Salt Supply (set) | 0–50,000 g | i-soft variants |
-| Salt Shortage Warning (set) | 1–90 days | i-soft variants |
-| Max Extraction Duration | 0–255 min | i-soft variants |
-| Max Extraction Volume | 0–65,535 L | i-soft variants |
-| Max Flow Rate | 0–65,535 L/h | i-soft variants |
-| Sleep Mode Duration | 1–10 h | ZEWA i-SAFE |
-
-### Binary Sensors
-
-| Entity | Description | Device Types |
-|---|---|---|
-| Learning Mode Active | Whether learning mode is currently active | ZEWA i-SAFE |
-
----
-
-## Network Requirements
-
-- The JUDO device must be on the **same local network** as your Home Assistant instance.
-- Communication uses **HTTP** (port 80) with **Basic Authentication**.
-- No internet connection is required — all communication is local.
-
----
-
-## Integration Branding (HA 2026.3+)
-
-This integration now ships local branding assets in:
-
-`custom_components/jucontrol_local/brand/`
-
-Included files:
-
-- `icon.png`
-- `icon@2x.png`
-- `logo.png`
-- `logo@2x.png`
-
-Home Assistant resolves integration images by domain (`jucontrol_local`) and loads these assets automatically.
-Per-device logos are not supported via `device_info`; visible images come from integration branding.
-
-Quick check endpoints in your HA instance:
-
-- `/api/brands/integration/jucontrol_local/icon.png`
-- `/api/brands/integration/jucontrol_local/logo.png`
-
-If a file is missing or the domain/path is wrong, Home Assistant returns a default placeholder image.
-
----
-
-## Blueprint: Salt Supply Reminder
-
-The repository now includes a ready-to-use blueprint for the salt supply reminder:
-
-`blueprints/automation/itsh-neumeier/jucontrol_salt_supply_reminder.yaml`
-
-The blueprint sends an immediate alert when `Salt range` falls to or below
-`Salt shortage warning` and then repeats the reminder daily until the value
-recovers above the threshold again.
-
-Blueprint inputs:
-
-- `Salt range entity`: the JUcontrol `Salt range` entity
-- `Salt shortage warning entity`: the entity that holds the warning threshold
-- `Daily reminder time`: time used for the recurring daily reminder
-- `Notification title`: title for the reminder
-- `Notification intro text`: free text shown before the automatically inserted day values
-- `Reminder actions`: optional custom actions such as `notify.mobile_app_*`
-
-If no custom actions are configured, the blueprint creates a Home Assistant
-`persistent_notification` by default.
-
-Import the blueprint in Home Assistant via
-**Settings > Automations & Scenes > Blueprints > Import Blueprint** and use the
-file from this repository. If you want to change the threshold directly in Home Assistant,
-use the `Salt shortage warning (set)` number entity.
-
----
-
-## Troubleshooting
-
-| Problem | Solution |
+| Cmd | Funktion |
 |---|---|
-| **Cannot connect** | Verify the IP address is correct and the device is powered on. Ensure Home Assistant can reach the device (same VLAN/subnet). |
-| **Invalid authentication** | Check username and password. Default credentials are `admin` / `Connectivity`. |
-| **Unknown device** | The device type is not yet supported. Please open an issue on GitHub with your device model. |
-| **Entities not updating** | Check the polling interval in the integration options. Verify network connectivity to the device. |
-| **Entities show "unavailable"** | The device may be temporarily unreachable. Check your network and device status. |
+| `0xFF` | Gerätetyp |
+| `0x06` | Seriennummer |
+| `0x01` | Software-Version |
+| `0x51` | Wunschwasserhärte lesen |
+| `0x30` | Wunschwasserhärte setzen |
+| `0x56` | Salzvorrat (Gewicht + Reichweite) |
+| `0x28` | Gesamtwassermenge |
+| `0x29` | Enthärtetes Wasser |
+| `0x3D` | Leckageschutz öffnen |
+| `0x3C` | Leckageschutz schließen |
 
----
+HTTP 429 (Gerät beschäftigt) wird mit einem 2-Sekunden-Retry abgefangen.
 
-## Contributing
+## Lizenz
 
-Contributions are welcome! Please:
-
-1. Fork the repository.
-2. Create a feature branch (`git checkout -b feature/my-feature`).
-3. Commit your changes following [Conventional Commits](https://www.conventionalcommits.org/).
-4. Push to your branch and open a Pull Request.
-
-If you have a JUDO device model that is not yet supported, please open an issue with the device type code (readable via the integration's diagnostics).
-
----
-
-## License
-
-This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
-
----
-
-## Disclaimer
-
-This integration is **not affiliated with, endorsed by, or connected to JUDO Wasseraufbereitung GmbH**. JUDO, i-soft, SOFTwell, ZEWA, i-dos, and i-fill are trademarks of JUDO Wasseraufbereitung GmbH. Use this integration at your own risk.
+MIT — siehe [LICENSE](LICENSE)

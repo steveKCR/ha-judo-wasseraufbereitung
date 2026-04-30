@@ -1,0 +1,53 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "JUDO i-soft K SAFE+ einrichten",
+        "description": "Geben Sie die lokale IP-Adresse und die Anmeldedaten Ihres JUDO-Geräts ein.",
+        "data": {
+          "host": "IP-Adresse",
+          "username": "Benutzername",
+          "password": "Passwort",
+          "scan_interval": "Abfrageintervall"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung zum Gerät nicht möglich.",
+      "invalid_auth": "Ungültiger Benutzername oder Passwort.",
+      "unsupported_device": "Diese Integration unterstützt nur den JUDO i-soft K SAFE+.",
+      "unknown": "Unerwarteter Fehler."
+    },
+    "abort": {
+      "already_configured": "Dieses Gerät ist bereits konfiguriert."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "JUDO Wasseraufbereitung – Optionen",
+        "data": {
+          "scan_interval": "Abfrageintervall"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "current_flow_rate": { "name": "Aktueller Durchfluss" },
+      "total_water_m3": { "name": "Gesamtwassermenge (m³)" },
+      "total_water_liters": { "name": "Gesamtwassermenge (Liter)" },
+      "soft_water_m3": { "name": "Enthärtetes Wasser (m³)" },
+      "soft_water_liters": { "name": "Enthärtetes Wasser (Liter)" },
+      "salt_range_days": { "name": "Salzreichweite (Tage)" },
+      "salt_weight_kg": { "name": "Salzvorrat" },
+      "water_hardness": { "name": "Aktuelle Wasserhärte" }
+    },
+    "select": {
+      "set_water_hardness": { "name": "Wunschwasserhärte" }
+    },
+    "valve": {
+      "leak_protection": { "name": "Leckageschutz" }
+    }
+  }
+}
