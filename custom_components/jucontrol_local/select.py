@@ -24,6 +24,7 @@ from .const import (
     PUMP_MODES,
     VACATION_MODES_SOFTENER,
     VACATION_MODES_ZEWA,
+    WATER_HARDNESS_OPTIONS,
 )
 from .coordinator import JudoDataCoordinator
 from .device_types import Capability
@@ -43,6 +44,20 @@ class JudoSelectEntityDescription(SelectEntityDescription):
 
 
 SELECT_DESCRIPTIONS: tuple[JudoSelectEntityDescription, ...] = (
+    # Wunsch-Wasserhärte als Dropdown (1–30 °dH)
+    JudoSelectEntityDescription(
+        key="set_water_hardness_select",
+        translation_key="set_water_hardness_select",
+        icon="mdi:water-opacity",
+        required_capability=Capability.SET_HARDNESS,
+        options_map={},  # options_list is used directly
+        options_list=WATER_HARDNESS_OPTIONS,
+        current_fn=lambda data: str(data.get("water_hardness", 1))
+        if data.get("water_hardness") is not None
+        else None,
+        default_option="6",
+        select_fn=lambda coord, val: coord.client.set_water_hardness(int(val)),
+    ),
     JudoSelectEntityDescription(
         key="hardness_unit",
         translation_key="set_hardness_unit",
@@ -87,6 +102,7 @@ SELECT_DESCRIPTIONS: tuple[JudoSelectEntityDescription, ...] = (
         key="vacation_mode",
         translation_key="vacation_mode",
         icon="mdi:palm-tree",
+        entity_registry_enabled_default=False,
         required_capability=Capability.VACATION_MODE,
         options_map=VACATION_MODES_SOFTENER,
         options_list=list(VACATION_MODES_SOFTENER.keys()),
@@ -101,6 +117,7 @@ SELECT_DESCRIPTIONS: tuple[JudoSelectEntityDescription, ...] = (
         key="zewa_vacation_mode",
         translation_key="vacation_mode",
         icon="mdi:palm-tree",
+        entity_registry_enabled_default=False,
         required_capability=Capability.ZEWA_VACATION,
         options_map=VACATION_MODES_ZEWA,
         current_fn=None,
@@ -127,6 +144,7 @@ SELECT_DESCRIPTIONS: tuple[JudoSelectEntityDescription, ...] = (
         key="isoft_scene",
         translation_key="isoft_scene",
         icon="mdi:water-sync",
+        entity_registry_enabled_default=False,
         required_capability=Capability.WATER_SCENES,
         options_map=ISOFT_SCENES,
         current_fn=None,
@@ -140,6 +158,7 @@ SELECT_DESCRIPTIONS: tuple[JudoSelectEntityDescription, ...] = (
         key="pro_scene",
         translation_key="pro_scene",
         icon="mdi:water-sync",
+        entity_registry_enabled_default=False,
         required_capability=Capability.SCENES,
         options_map=PRO_SCENES,
         current_fn=None,

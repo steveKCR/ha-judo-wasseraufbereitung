@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 2026-04-30
+
+### Added
+
+- **Water hardness dropdown select** (`set_water_hardness_select`): replaces the slider for setting desired water hardness — full dropdown with 1–30 °dH; reads back current value from device; restores last selection after HA restart
+- **Total water volume in liters** sensor (`total_water_liters`): raw liter counter alongside the existing m³ sensor
+- **Softened water in liters** sensor (`soft_water_liters`): raw liter counter alongside the existing m³ sensor
+
+### Changed
+
+- **`current_flow_rate`** sensor is now enabled by default (was disabled)
+- Renamed total/soft water sensor labels to clarify unit in name (m³ vs liters)
+- **Disabled by default** (can be re-enabled in entity registry): `set_water_hardness` number, `set_salt_supply` number, `salt_refill_25kg` button, `start_regeneration` button, vacation mode selects, scene selects
+
 ## [1.5.0] - 2026-04-30
 
 ### Added

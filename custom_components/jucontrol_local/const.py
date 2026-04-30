@@ -90,6 +90,9 @@ MICRO_LEAK_SETTINGS: dict[int, str] = {
     2: "notify_and_close",
 }
 
+# Wunsch-Wasserhärte Dropdown-Optionen (1–30 °dH)
+WATER_HARDNESS_OPTIONS: list[str] = [str(i) for i in range(1, 31)]
+
 # i-soft SAFE+ / i-soft K SAFE+ / i-soft water scenes (scenes 0-4, cmd 0x36)
 ISOFT_SCENES: dict[int, str] = {
     0: "normal_operation",
