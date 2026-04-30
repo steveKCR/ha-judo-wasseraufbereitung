@@ -89,6 +89,17 @@ views:
                   service: valve.close_valve
                   target:
                     entity_id: valve.judo_YOUR_DEVICE_NUMBER_leak_protection
+                  confirmation:
+                    text: "Wirklich Wasser absperren?"
+              - type: button
+                entity: valve.judo_YOUR_DEVICE_NUMBER_leak_protection
+                name: Wasser freigeben
+                icon: mdi:water-check
+                tap_action:
+                  action: call-service
+                  service: valve.open_valve
+                  target:
+                    entity_id: valve.judo_YOUR_DEVICE_NUMBER_leak_protection
               - type: button
                 entity: button.judo_YOUR_DEVICE_NUMBER_start_regeneration
                 name: Regeneration
@@ -98,16 +109,25 @@ views:
                   service: button.press
                   target:
                     entity_id: button.judo_YOUR_DEVICE_NUMBER_start_regeneration
+                  confirmation:
+                    text: "Regeneration wirklich starten?"
+
+          - type: button
+            entity: button.judo_YOUR_DEVICE_NUMBER_salt_refill_25kg
+            name: Salz nachgefüllt (25 kg)
+            icon: mdi:shaker-outline
+            tap_action:
+              action: call-service
+              service: button.press
+              target:
+                entity_id: button.judo_YOUR_DEVICE_NUMBER_salt_refill_25kg
+              confirmation:
+                text: "25 kg Salz als nachgefüllt markieren?"
 
           - type: entities
             entities:
               - entity: select.judo_YOUR_DEVICE_NUMBER_vacation_mode
                 name: Urlaubsmodus
-
-          - type: entities
-            entities:
-              - entity: number.judo_YOUR_DEVICE_NUMBER_set_salt_supply
-                name: Salzvorrat nachfüllen (kg)
 
   # ── EINSTELLUNGEN / GRENZWERTE ───────────────────────────────────────────
   - title: Einstellungen
