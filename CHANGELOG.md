@@ -5,6 +5,13 @@ Alle nennenswerten Änderungen werden hier dokumentiert.
 Format orientiert sich an [Keep a Changelog](https://keepachangelog.com/de/1.1.0/),
 Versionierung nach [SemVer](https://semver.org/lang/de/).
 
+## [1.0.2] - 2026-04-30
+
+### Geändert
+
+- Dokumentation und Issue-Tracker im Manifest auf das kanonische Repository
+  [ha-judo-wasseraufbereitung](https://github.com/steveKCR/ha-judo-wasseraufbereitung) zeigen; README (HACS-Link, Release-Badge) angepasst.
+
 ## [1.0.1] - 2026-04-30
 
 ### Geändert
