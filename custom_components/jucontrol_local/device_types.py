@@ -50,6 +50,9 @@ class Capability(StrEnum):
     ZEWA_NOTIFICATION = "zewa_notification"
     ZEWA_ABSENCE = "zewa_absence"
 
+    # i-soft SAFE+ / i-soft water scenes (5 scenes via cmd 0x36)
+    WATER_SCENES = "water_scenes"
+
     # i-soft PRO specific
     SCENES = "scenes"
 
@@ -90,8 +93,8 @@ _SOFTENER_BASE: set[Capability] = {
     Capability.VACATION_MODE,
 }
 
-_SOFTENER_LEAK = _SOFTENER_BASE | {Capability.LEAK_PROTECTION}
-_SOFTENER_ALARM = _SOFTENER_BASE | {Capability.LEAK_ALARM}
+_SOFTENER_LEAK = _SOFTENER_BASE | {Capability.LEAK_PROTECTION, Capability.WATER_SCENES}
+_SOFTENER_ALARM = _SOFTENER_BASE | {Capability.LEAK_ALARM, Capability.WATER_SCENES}
 _SOFTENER_PRO = _SOFTENER_LEAK | {Capability.SCENES}
 
 _SOFTWELL_CAPS: set[Capability] = {
@@ -230,6 +233,7 @@ def get_platforms_for_device(type_code: int) -> list[str]:
         Capability.VACATION_MODE,
         Capability.ZEWA_VACATION,
         Capability.SCENES,
+        Capability.WATER_SCENES,
     }:
         platforms.append("select")
 

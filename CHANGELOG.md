@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-04-30
+
+### Added
+
+- **Water scene select for i-soft SAFE+ / i-soft K SAFE+ / i-soft** (`isoft_scene`): 5 preset water scenes (Normalbetrieb, Duschen, Gartenbewässerung, Heizungsbefüllung, Waschen) via cmd `0x36`; new `WATER_SCENES` capability added to `_SOFTENER_LEAK` and `_SOFTENER_ALARM` device sets
+- **Example Lovelace dashboard** (`dashboards/jucontrol_isoft_safe_plus.yaml`): app-style dashboard with Betriebsstatus, Wasserszenen, Bedienung, Einstellungen/Grenzwerte, Verbrauchsdiagramm and Info views
+
 ## [1.3.0] - 2026-04-30
 
 ### Fixed

@@ -1,0 +1,232 @@
+# JUcontrol Dashboard – i-soft SAFE+ / i-soft K SAFE+
+#
+# Installation:
+#   1. In Home Assistant: Einstellungen → Dashboards → Dashboard hinzufügen
+#   2. "Aus YAML laden" wählen und diesen Inhalt einfügen
+#   3. ODER: Diese Datei als /config/lovelace/jucontrol.yaml speichern
+#      und in configuration.yaml eintragen:
+#        lovelace:
+#          dashboards:
+#            jucontrol:
+#              mode: yaml
+#              filename: lovelace/jucontrol.yaml
+#              title: JUcontrol
+#              icon: mdi:water-opacity
+#
+# Hinweis: Ersetze "YOUR_DEVICE_NUMBER" überall durch deine Gerätenummer,
+# z. B. "12345678" (sichtbar im HA-Geräteprofil als Seriennummer).
+# Entity-IDs haben das Format: sensor.judo_GERÄTENUMMER_SENSORNAME
+#
+# Beispiel für Gerätenummer 12345678:
+#   sensor.judo_12345678_water_hardness
+
+title: JUcontrol
+views:
+  - title: Betriebsstatus
+    path: betriebsstatus
+    icon: mdi:water-opacity
+    cards:
+
+      # ── KOPF: Betriebsstatus ──────────────────────────────────────────────
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: "## 💧 Betriebsstatus"
+
+          - type: glance
+            show_name: true
+            show_icon: true
+            show_state: true
+            entities:
+              - entity: sensor.judo_YOUR_DEVICE_NUMBER_water_hardness
+                name: Wasserhärte
+              - entity: valve.judo_YOUR_DEVICE_NUMBER_leak_protection
+                name: Leckageschutz
+              - entity: sensor.judo_YOUR_DEVICE_NUMBER_current_flow_rate
+                name: Durchfluss
+                # Hinweis: Sensor muss in HA erst aktiviert werden!
+
+      # ── SALZVORRAT ────────────────────────────────────────────────────────
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: "## 🧂 Salzvorrat"
+
+          - type: entities
+            entities:
+              - entity: sensor.judo_YOUR_DEVICE_NUMBER_salt_weight
+                name: Salzvorrat
+              - entity: sensor.judo_YOUR_DEVICE_NUMBER_salt_range
+                name: Reichweite (Tage)
+              - entity: sensor.judo_YOUR_DEVICE_NUMBER_salt_shortage_warning
+                name: Warnschwelle (Tage)
+
+      # ── WASSERSZENEN ─────────────────────────────────────────────────────
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: "## 🌊 Wasserszenen"
+
+          - type: entities
+            entities:
+              - entity: select.judo_YOUR_DEVICE_NUMBER_isoft_scene
+                name: Aktive Szene
+
+      # ── BEDIENUNG ─────────────────────────────────────────────────────────
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: "## 🎛️ Bedienung"
+
+          - type: horizontal-stack
+            cards:
+              - type: button
+                entity: valve.judo_YOUR_DEVICE_NUMBER_leak_protection
+                name: Wasser absperren
+                icon: mdi:water-off
+                tap_action:
+                  action: call-service
+                  service: valve.close_valve
+                  target:
+                    entity_id: valve.judo_YOUR_DEVICE_NUMBER_leak_protection
+              - type: button
+                entity: button.judo_YOUR_DEVICE_NUMBER_start_regeneration
+                name: Regeneration
+                icon: mdi:refresh
+                tap_action:
+                  action: call-service
+                  service: button.press
+                  target:
+                    entity_id: button.judo_YOUR_DEVICE_NUMBER_start_regeneration
+
+          - type: entities
+            entities:
+              - entity: select.judo_YOUR_DEVICE_NUMBER_vacation_mode
+                name: Urlaubsmodus
+
+          - type: entities
+            entities:
+              - entity: number.judo_YOUR_DEVICE_NUMBER_set_salt_supply
+                name: Salzvorrat nachfüllen (kg)
+
+  # ── EINSTELLUNGEN / GRENZWERTE ───────────────────────────────────────────
+  - title: Einstellungen
+    path: einstellungen
+    icon: mdi:cog-outline
+    cards:
+
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: "## ⚙️ Wasser-Einstellungen"
+
+          - type: entities
+            entities:
+              - entity: number.judo_YOUR_DEVICE_NUMBER_set_water_hardness
+                name: Wunschwasserhärte
+              - entity: select.judo_YOUR_DEVICE_NUMBER_hardness_unit
+                name: Härteeinheit
+
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: "## 🔒 Grenzwerte (Leckageschutz)"
+
+          - type: entities
+            entities:
+              - entity: number.judo_YOUR_DEVICE_NUMBER_set_max_extraction_duration
+                name: Max. Entnahmedauer (min)
+              - entity: number.judo_YOUR_DEVICE_NUMBER_set_max_extraction_volume
+                name: Max. Entnahmemenge (L)
+              - entity: number.judo_YOUR_DEVICE_NUMBER_set_max_flow_rate
+                name: Max. Volumenstrom (L/h)
+
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: "## 🏖️ Urlaubsmodus"
+
+          - type: entities
+            entities:
+              - entity: select.judo_YOUR_DEVICE_NUMBER_vacation_mode
+                name: Urlaubsmodus
+
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: "## 🧂 Salzvorrat-Warnung"
+
+          - type: entities
+            entities:
+              - entity: number.judo_YOUR_DEVICE_NUMBER_set_salt_shortage_warning
+                name: Warnschwelle (Tage)
+
+  # ── WASSERVERBRAUCH ──────────────────────────────────────────────────────
+  - title: Verbrauch
+    path: verbrauch
+    icon: mdi:chart-bar
+    cards:
+
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: "## 📊 Wassermengen"
+
+          - type: statistic
+            entity: sensor.judo_YOUR_DEVICE_NUMBER_total_water
+            name: Gesamtwasser
+            period:
+              calendar:
+                period: month
+            stat_type: change
+
+          - type: statistic
+            entity: sensor.judo_YOUR_DEVICE_NUMBER_soft_water
+            name: Weichwasser (Monat)
+            period:
+              calendar:
+                period: month
+            stat_type: change
+
+          - type: history-graph
+            title: Wasserdurchfluss (letzte 24h)
+            hours_to_show: 24
+            entities:
+              - entity: sensor.judo_YOUR_DEVICE_NUMBER_current_flow_rate
+                name: Durchfluss L/h
+
+          - type: glance
+            entities:
+              - entity: sensor.judo_YOUR_DEVICE_NUMBER_total_water
+                name: Gesamt m³
+              - entity: sensor.judo_YOUR_DEVICE_NUMBER_soft_water
+                name: Weich m³
+              - entity: sensor.judo_YOUR_DEVICE_NUMBER_operating_days
+                name: Betriebstage
+
+  # ── GERÄTEINFORMATIONEN ──────────────────────────────────────────────────
+  - title: Info
+    path: info
+    icon: mdi:information-outline
+    cards:
+
+      - type: vertical-stack
+        cards:
+          - type: markdown
+            content: "## ℹ️ Geräteinformationen"
+
+          - type: entities
+            entities:
+              - entity: sensor.judo_YOUR_DEVICE_NUMBER_commissioning_date
+                name: Inbetriebnahmedatum
+              - entity: sensor.judo_YOUR_DEVICE_NUMBER_service_address
+                name: Serviceadresse
+              - entity: sensor.judo_YOUR_DEVICE_NUMBER_hardness_unit
+                name: Aktive Härteeinheit
+              - entity: sensor.judo_YOUR_DEVICE_NUMBER_operating_days
+                name: Betriebstage
+
+          - type: markdown
+            content: >
+              **Softwareversion und Gerätenummer** sind im HA-Geräteprofil
+              sichtbar: Einstellungen → Geräte & Dienste → JUcontrol → Gerät anklicken.

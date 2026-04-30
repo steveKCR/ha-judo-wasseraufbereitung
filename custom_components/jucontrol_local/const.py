@@ -90,6 +90,15 @@ MICRO_LEAK_SETTINGS: dict[int, str] = {
     2: "notify_and_close",
 }
 
+# i-soft SAFE+ / i-soft K SAFE+ / i-soft water scenes (scenes 0-4, cmd 0x36)
+ISOFT_SCENES: dict[int, str] = {
+    0: "normal_operation",
+    1: "shower",
+    2: "garden_irrigation",
+    3: "heating_fill",
+    4: "washing",
+}
+
 # i-soft PRO water scenes (scenes 0-10, cmd 0x36)
 PRO_SCENES: dict[int, str] = {
     0: "everyday",

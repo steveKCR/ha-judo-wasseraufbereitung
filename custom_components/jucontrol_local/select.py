@@ -17,6 +17,7 @@ from .const import (
     FILL_VALVE_MODES,
     HARDNESS_UNITS,
     IFILL_ALARM_RELAY_MODES,
+    ISOFT_SCENES,
     MICRO_LEAK_SETTINGS,
     PRO_SCENES,
     PUMP_MODES,
@@ -115,6 +116,18 @@ SELECT_DESCRIPTIONS: tuple[JudoSelectEntityDescription, ...] = (
         ),
         select_fn=lambda coord, val: coord.client.zewa_set_micro_leak(
             next(k for k, v in MICRO_LEAK_SETTINGS.items() if v == val)
+        ),
+    ),
+    # i-soft SAFE+ / i-soft K SAFE+ / i-soft water scenes (5 scenes)
+    JudoSelectEntityDescription(
+        key="isoft_scene",
+        translation_key="isoft_scene",
+        icon="mdi:water-sync",
+        required_capability=Capability.WATER_SCENES,
+        options_map=ISOFT_SCENES,
+        current_fn=None,
+        select_fn=lambda coord, val: coord.client.pro_activate_scene(
+            next(k for k, v in ISOFT_SCENES.items() if v == val)
         ),
     ),
     # i-soft PRO water scenes

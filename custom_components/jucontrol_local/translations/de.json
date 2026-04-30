@@ -104,7 +104,8 @@
       "fill_valve_mode": { "name": "Füllventilmodus" },
       "vacation_mode": { "name": "Urlaubsmodus" },
       "micro_leak_mode": { "name": "Mikroleckage-Modus" },
-      "pro_scene": { "name": "Wasserszene" },
+      "isoft_scene": { "name": "Wasserszene" },
+      "pro_scene": { "name": "Wasserszene (PRO)" },
       "idos_concentration_select": { "name": "Dosierkonzentration (setzen)" },
       "ifill_alarm_relay": { "name": "Alarm-Relais" }
     }
